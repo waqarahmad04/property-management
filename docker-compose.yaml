@@ -1,0 +1,25 @@
+
+version: '3'
+
+services:
+  server:
+    build:
+      context: ./server
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./server:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  client:
+    build:
+      context: ./client
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./client:/app
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api
